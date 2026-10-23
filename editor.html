@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Note - Student Book</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="editor-page">
+  <header class="editor-header">
+    <div class="editor-header-inner">
+      <button id="back-btn" class="btn-icon" aria-label="Back to dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+        </svg>
+      </button>
+      <input type="text" id="note-title" class="editor-title-input" placeholder="Note title..." autocomplete="off">
+      <span id="word-count" style="font-size:.76rem;color:var(--text-muted);white-space:nowrap;flex-shrink:0;"></span>
+      <div class="header-actions">
+        <button class="btn-icon d-none-mobile" data-theme-toggle aria-label="Switch theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
+        <button class="btn-icon d-none-mobile" data-action="settings" aria-label="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.32 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        </button>
+        <button id="save-btn" class="btn-icon" aria-label="Save (Ctrl+S)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/>
+            <polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="editor-toolbar">
+    <div class="toolbar-group">
+      <button class="toolbar-btn" data-cmd="bold" title="Bold (Ctrl+B)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6z"/><path d="M6 12h9a4 4 0 014 4 4 4 0 01-4 4H6z"/></svg>
+      </button>
+      <button class="toolbar-btn" data-cmd="italic" title="Italic (Ctrl+I)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
+      </button>
+    </div>
+
+    <div class="toolbar-group">
+      <button class="toolbar-btn" data-cmd="insertUnorderedList" title="Bullet list">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      </button>
+      <button class="toolbar-btn" data-cmd="insertOrderedList" title="Numbered list">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+      </button>
+    </div>
+
+    <div class="toolbar-group">
+      <button id="image-btn" class="toolbar-btn" title="Insert image">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      </button>
+    </div>
+
+    <div class="toolbar-group d-none-mobile">
+      <div class="color-picker-group">
+        <button class="color-swatch" data-color-preset="text" data-color="#e74c3c" style="background:#e74c3c" title="Red text"></button>
+        <button class="color-swatch" data-color-preset="text" data-color="#f39c12" style="background:#f39c12" title="Orange text"></button>
+        <button class="color-swatch" data-color-preset="text" data-color="#2ecc71" style="background:#2ecc71" title="Green text"></button>
+        <button class="color-swatch" data-color-preset="text" data-color="#3498db" style="background:#3498db" title="Blue text"></button>
+        <button class="color-swatch" data-color-preset="text" data-color="#9b59b6" style="background:#9b59b6" title="Purple text"></button>
+        <input type="color" id="text-color-input" class="toolbar-color-input" value="#e74c3c" title="Custom text color">
+      </div>
+      <div class="toolbar-separator"></div>
+      <div class="color-picker-group">
+        <button class="color-swatch" data-color-preset="bg" data-color="#fef08a" style="background:#fef08a" title="Yellow highlight"></button>
+        <button class="color-swatch" data-color-preset="bg" data-color="#86efac" style="background:#86efac" title="Green highlight"></button>
+        <button class="color-swatch" data-color-preset="bg" data-color="#93c5fd" style="background:#93c5fd" title="Blue highlight"></button>
+        <button class="color-swatch" data-color-preset="bg" data-color="#f9a8d4" style="background:#f9a8d4" title="Pink highlight"></button>
+        <button class="color-swatch" data-color-preset="bg" data-color="#d8b4fe" style="background:#d8b4fe" title="Purple highlight"></button>
+        <input type="color" id="bg-color-input" class="toolbar-color-input" value="#fef08a" title="Custom highlight color">
+      </div>
+    </div>
+
+    <div class="toolbar-group d-none-mobile">
+      <button id="zoom-out" class="toolbar-btn" title="Zoom out">A-</button>
+      <span id="zoom-display" class="zoom-display">100%</span>
+      <button id="zoom-in" class="toolbar-btn" title="Zoom in">A+</button>
+    </div>
+
+    <div class="toolbar-spacer"></div>
+
+    <div class="toolbar-right">
+      <button id="grammar-btn" class="toolbar-btn toolbar-btn-text toolbar-btn-accent" title="Grammar check">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Grammar</span>
+      </button>
+      <button id="voice-btn" class="toolbar-btn" title="Voice typing">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+      </button>
+      <button id="ai-summarize-btn" class="toolbar-btn toolbar-btn-text toolbar-btn-accent" title="Summarize with AI">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg>
+        <span>Summarize</span>
+      </button>
+      <button id="export-pdf-btn" class="toolbar-btn" title="Export to PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </button>
+      <button id="exam-btn" class="toolbar-btn toolbar-btn-text toolbar-btn-accent" title="Generate exam from notes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
+        <span>Exam</span>
+      </button>
+      <div class="toolbar-separator d-none-mobile"></div>
+      <button class="toolbar-btn d-none-mobile" data-action="ai-config" title="AI Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.32 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="grammar-bar" class="grammar-bar">
+    <div class="grammar-bar-count">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span>Issues: <strong id="grammar-count">0</strong></span>
+    </div>
+    <div id="grammar-list"></div>
+    <div class="grammar-bar-actions">
+      <button id="grammar-fix-all" class="btn btn-primary" style="font-size:.78rem;padding:.3rem .7rem">Fix All</button>
+      <button id="grammar-close" class="btn-icon" style="width:28px;height:28px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="img-toolbar" class="img-toolbar">
+    <button class="toolbar-btn" data-img-center title="Center image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="10" x2="6" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="18" y1="14" x2="6" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>
+    </button>
+    <div class="toolbar-separator"></div>
+    <button class="toolbar-btn" data-img-width="33%" title="Small">30%</button>
+    <button class="toolbar-btn" data-img-width="50%" title="Medium">50%</button>
+    <button class="toolbar-btn" data-img-width="75%" title="Large">75%</button>
+    <button class="toolbar-btn" data-img-width="100%" title="Full" style="font-weight:600">100%</button>
+    <div class="toolbar-separator"></div>
+    <button class="toolbar-btn" data-img-delete title="Delete" style="color:var(--accent-crimson)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+    </button>
+  </div>
+
+  <div class="editor-scroll">
+    <div class="editor-print-header" data-project-title>Student Book</div>
+    <div class="editor-zoom-wrapper">
+      <div id="editor-content" class="editor-content" contenteditable="true"></div>
+      <div id="ai-summarize-result" style="max-width:800px;margin:2rem auto 0;padding:0 1rem;"></div>
+    </div>
+  </div>
+
+  <div id="settings-modal-overlay" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.32 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          Settings
+        </div>
+        <button class="btn-icon modal-close-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Project Title</label>
+          <input type="text" id="settings-project-title" class="form-input" placeholder="Student Book">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Project Description</label>
+          <textarea id="settings-project-desc" class="form-textarea" placeholder="Describe your notebook..." rows="2"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Theme</label>
+          <select id="settings-theme" class="form-select">
+            <option value="dark">Dark (Scholarly)</option>
+            <option value="light">Light (Warm)</option>
+            <option value="bw">Black &amp; White</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost modal-cancel-btn">Cancel</button>
+        <button id="settings-save-btn" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="ai-config-overlay" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg>
+          AI Configuration
+        </div>
+        <button class="btn-icon modal-close-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">AI Provider</label>
+            <select id="ai-provider" class="form-select">
+              <option value="openai">OpenAI</option>
+              <option value="anthropic">Anthropic</option>
+              <option value="openrouter">OpenRouter</option>
+              <option value="google">Google Gemini</option>
+              <option value="custom">Custom Endpoint</option>
+            </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">API Key</label>
+          <input type="password" id="ai-api-key" class="form-input" placeholder="sk-...">
+          <div class="form-hint">Stored locally in your browser only.</div>
+        </div>
+        <div class="form-group" id="model-group">
+          <label class="form-label">Model</label>
+          <div style="display:flex;gap:.4rem">
+            <input type="text" id="ai-model" class="form-input" style="flex:1" placeholder="gpt-4o-mini">
+            <button id="browse-models-btn" class="btn btn-ghost" style="display:none;white-space:nowrap;font-size:.78rem;padding:.35rem .6rem">Browse</button>
+          </div>
+          <div id="model-browse-panel" style="display:none;margin-top:.4rem">
+            <label style="font-size:.76rem;display:flex;align-items:center;gap:.35rem;margin-bottom:.3rem;color:var(--text-secondary)">
+              <input type="checkbox" id="free-only"> Free models only
+            </label>
+            <select id="ai-model-list" class="form-select" size="5" style="width:100%;font-size:.78rem"></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Custom Endpoint URL</label>
+          <input type="url" id="ai-endpoint" class="form-input" placeholder="https://your-api.com/v1/chat/completions">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost modal-cancel-btn">Cancel</button>
+        <button id="ai-config-save-btn" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="confirm-overlay" class="modal-overlay">
+    <div class="modal confirm-modal">
+      <div class="modal-body">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <p id="confirm-message">Are you sure?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="confirm-no" class="btn btn-ghost">Cancel</button>
+        <button id="confirm-yes" class="btn btn-primary" style="background:var(--accent-crimson)">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="exam-overlay" class="modal-overlay">
+    <div id="exam-modal" class="modal exam-modal">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
+          AI Exam
+        </div>
+        <button class="btn-icon modal-close-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" style="padding-bottom:0">
+        <div id="exam-content" style="min-height:150px">
+          <div style="text-align:center;padding:2rem">
+            <p style="color:var(--text-muted);margin-bottom:1rem;font-size:.9rem">Generate an MCQ & True/False exam from your notes. AI decides the number of questions.</p>
+            <button id="exam-start-btn" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg> Start Exam
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" id="exam-nav" style="display:none">
+        <button id="exam-prev-btn" class="btn btn-ghost" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><polyline points="15 18 9 12 15 6"/></svg> Prev
+        </button>
+        <span id="exam-progress" style="font-size:.8rem;color:var(--text-muted)"></span>
+        <button id="exam-next-btn" class="btn btn-primary">
+          Next <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <button id="exam-submit-btn" class="btn btn-primary" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Submit &amp; Evaluate
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="reaction-overlay" class="reaction-test-overlay"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
